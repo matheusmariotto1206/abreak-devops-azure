@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABrEak - Monitor de Pausas Saudáveis</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>🧘 ABrEak</h1>
+                <p>Monitor de Pausas Saudáveis no Trabalho</p>
+            </div>
+            <div class="user-info" id="userInfo">
+                <select id="userSelect" class="user-select">
+                    <option value="">Selecione um usuário...</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section class="dashboard" id="dashboard" style="display: none;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">💧</div>
+                    <div class="stat-content">
+                        <h3>Hidratação Hoje</h3>
+                        <p class="stat-value" id="statHidratacao">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🤸</div>
+                    <div class="stat-content">
+                        <h3>Alongamento Hoje</h3>
+                        <p class="stat-value" id="statAlongamento">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👁️</div>
+                    <div class="stat-content">
+                        <h3>Descanso Visual Hoje</h3>
+                        <p class="stat-value" id="statDescansoVisual">0</p>
+                    </div>
+                </div>
+                <div class="stat-card highlight">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3>Total Hoje</h3>
+                        <p class="stat-value" id="statTotal">0 / <span id="statQuota">6</span></p>
+                        <small id="statusQuota" class="status-ok">Dentro da meta</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Actions Section -->
+        <section class="actions" id="actionsSection" style="display: none;">
+            <h2>📝 Registrar Nova Pausa</h2>
+            <form id="breakForm" class="break-form">
+                <div class="form-group">
+                    <label for="breakType">Tipo de Pausa</label>
+                    <select id="breakType" required>
+                        <option value="">Selecione...</option>
+                        <option value="HIDRATACAO">💧 Hidratação</option>
+                        <option value="ALONGAMENTO">🤸 Alongamento</option>
+                        <option value="DESCANSO_VISUAL">👁️ Descanso Visual</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duração (segundos)</label>
+                    <input type="number" id="duration" min="30" max="200" value="60" required>
+                    <small>Mínimo 30s, Máximo 200s</small>
+                </div>
+                <button type="submit" class="btn btn-primary">✅ Registrar Pausa</button>
+            </form>
+        </section>
+
+        <!-- Break List Section -->
+        <section class="break-list" id="breakListSection" style="display: none;">
+            <div class="section-header">
+                <h2>📊 Histórico de Pausas</h2>
+                <button id="refreshBtn" class="btn btn-secondary">🔄 Atualizar</button>
+            </div>
+            <div id="breakList" class="list-container">
+                <!-- Breaks will be loaded here -->
+            </div>
+        </section>
+
+        <!-- User Management Section -->
+        <section class="user-management">
+            <h2>👥 Gerenciar Usuários</h2>
+            <button id="toggleUserForm" class="btn btn-secondary">➕ Novo Usuário</button>
+            
+            <form id="userForm" class="user-form" style="display: none;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="userName">Nome</label>
+                        <input type="text" id="userName" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="userPassword">Senha</label>
+                        <input type="password" id="userPassword" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPosition">Cargo</label>
+                        <input type="text" id="userPosition">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="breaksQuota">Meta de Pausas Diárias</label>
+                    <input type="number" id="breaksQuota" min="1" max="20" value="6">
+                </div>
+                <button type="submit" class="btn btn-primary">💾 Salvar Usuário</button>
+                <button type="button" id="cancelUserForm" class="btn btn-secondary">❌ Cancelar</button>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 ABrEak - Monitor de Pausas Saudáveis | FIAP - DevOps Tools & Cloud Computing</p>
+            <p class="api-status">API: <span id="apiStatus" class="status-disconnected">Desconectado</span></p>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
